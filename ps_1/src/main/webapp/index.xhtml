@@ -17,13 +17,13 @@
             <p:dialog header="Logowanie" widgetVar="loginDialog" resizable="false" >
                 <h:panelGrid columns="2" cellpadding="5">
                     <h:outputLabel for="username" value="Login:" />
-                    <p:inputText id="username" value="#{userLoginView.name}" required="true" label="username" requiredMessage="Wpraowadź login"/>
+                    <p:inputText id="username" value="#{indexBean.user.name}" required="true" label="username" requiredMessage="Wpraowadź login"/>
 
                     <h:outputLabel for="password" value="Hasło:" />
-                    <p:password id="password" value="#{userLoginView.password_hash}" required="true" label="password" requiredMessage="Wprowadź hasło"/>
+                    <p:password id="password" value="#{indexBean.user.password_hash}" required="true" label="password" requiredMessage="Wprowadź hasło"/>
 
                     <f:facet name="footer">
-                        <p:commandButton id="log" value="Zaloguj" update="growl" actionListener="#{userLoginView.login}"
+                        <p:commandButton id="log" value="Zaloguj" update="growl" actionListener="#{indexBean.login}"
                                          oncomplete="handleLoginRequest(xhr, status, args)" />
                     </f:facet>  
                 </h:panelGrid>
@@ -39,12 +39,12 @@
             <p:dialog header="Rejestracja" widgetVar="registerDialog" resizable="false" >
                 <h:panelGrid columns="2" cellpadding="5">
                     <h:outputLabel for="usernameReg" value="Login:" />
-                    <p:inputText id="usernameReg" value="#{userLoginView.name}" required="true" label="usernameReg"  requiredMessage="Wypełnij pole Login"/>
+                    <p:inputText id="usernameReg" value="#{indexBean.user.name}" required="true" label="usernameReg"  requiredMessage="Wypełnij pole Login"/>
 
                     <h:outputLabel for="passwordReg" value="Hasło:" />
-                    <p:password id="passwordReg" value="#{userLoginView.password_hash}" required="true" label="passwordReg" requiredMessage="Wypełnij pole Hasło"/>
+                    <p:password id="passwordReg" value="#{indexBean.user.password_hash}" required="true" label="passwordReg" requiredMessage="Wypełnij pole Hasło"/>
                     
-                    <p:commandButton id="reg" value="Zarejestruj" update="growlReg" actionListener="#{userLoginView.register}"
+                    <p:commandButton id="reg" value="Zarejestruj" update="growlReg" actionListener="#{indexBean.register}"
                                          oncomplete="handleRegisterRequest(xhr, status, args)" />                        
               
                 </h:panelGrid>
