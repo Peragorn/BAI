@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>BAI-PS1</title>
+    </h:head>
+    <h:body>
+        <h:form id="loginForm">            
+            <h:outputLink value="javascript:void(0)" onclick="PF('loginDialog').show();" title="Zaloguj się" >
+                <p:graphicImage value="icon/login-icon.png" width="40" height="40"/>
+            </h:outputLink>
+            <p:growl id="growl" sticky="false" showDetail="true" life="3000" />                      
+
+            <p:dialog header="Logowanie" widgetVar="loginDialog" resizable="false" >
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="username" value="Login:" />
+                    <p:inputText id="username" value="#{userLoginView.name}" required="true" label="username" requiredMessage="Wpraowadź login"/>
+
+                    <h:outputLabel for="password" value="Hasło:" />
+                    <p:password id="password" value="#{userLoginView.password_hash}" required="true" label="password" requiredMessage="Wprowadź hasło"/>
+
+                    <f:facet name="footer">
+                        <p:commandButton id="log" value="Zaloguj" update="growl" actionListener="#{userLoginView.login}"
+                                         oncomplete="handleLoginRequest(xhr, status, args)" />
+                    </f:facet>  
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="registerForm" >
+            <h:outputLink value="javascript:void(0)" onclick="PF('registerDialog').show();" title="Zarejestruj się">
+                <p:graphicImage value="icon/register.png" width="80" height="40"/>
+            </h:outputLink>            
+            <p:growl id="growlReg" showDetail="true" sticky="false" /> 
+            
+            <p:dialog header="Rejestracja" widgetVar="registerDialog" resizable="false" >
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="usernameReg" value="Login:" />
+                    <p:inputText id="usernameReg" value="#{userLoginView.name}" required="true" label="usernameReg"  requiredMessage="Wypełnij pole Login"/>
+
+                    <h:outputLabel for="passwordReg" value="Hasło:" />
+                    <p:password id="passwordReg" value="#{userLoginView.password_hash}" required="true" label="passwordReg" requiredMessage="Wypełnij pole Hasło"/>
+                    
+                    <p:commandButton id="reg" value="Zarejestruj" update="growlReg" actionListener="#{userLoginView.register}"
+                                         oncomplete="handleRegisterRequest(xhr, status, args)" />                        
+              
+                </h:panelGrid>
+            </p:dialog>            
+        </h:form>
+        
+        <script type="text/javascript">
+            function handleLoginRequest(xhr, status, args) {
+                if (args.validationFailed || !args.loggedIn) {
+                    PF('loginDialog').jq.effect("shake", {times: 5}, 100);
+                } else {
+                    PF('loginDialog').hide();
+                    $('#loggedLink').fadeOut();
+                }
+            }
+            
+            function handleRegisterRequest(xhr, status, args) {
+                if (args.validationFailed || !args.registered) {
+                    PF('registerDialog').jq.effect("shake", {times: 5}, 100);
+                } else {
+                    PF('registerDialog').hide();
+                    $('#registeredLink').fadeOut();
+                }
+            }
+        </script>
+    </h:body>
+</html>
+
