@@ -27,7 +27,7 @@ public class Message implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "message_id_seq")
 	@SequenceGenerator(name = "message_id_seq", sequenceName = "message_id_seq", allocationSize = 1)
 	@Column(name = "message_id", unique = true, nullable = false)
-	private long message_id;
+	@Getter @Setter private long message_id;
 
 	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH }, fetch = FetchType.EAGER, targetEntity = User.class)

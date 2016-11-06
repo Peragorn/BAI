@@ -11,4 +11,8 @@ public class UserBusiness{
 		this.userDao.addUser(user);
 	}
 
+	public User login(User user) {
+		return this.userDao.login(user);
+	}
+
 }

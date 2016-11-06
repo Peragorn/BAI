@@ -1,6 +1,8 @@
 # BAI
 Bezpieczenstwo aplikacji internetowych
-0. Aby działały Gettery i Settery niezbędne jest zainstalowanie lombok.jar (znajdziecie to w katalogu Others), po zainstalowaniu należy zrestartowac IDE
+
+0. Aby działały Gettery i Settery niezbędne jest zainstalowanie lombok.jar (znajdziecie to w katalogu Other), po zainstalowaniu należy zrestartowac IDE
+
 -------------------------------------------------------------------------------------------------------------
 1. Pobrać i zainstalować PostgreSQL wersja dowolna (ja mam 9.5) http://www.enterprisedb.com/products-services-training/pgdownload#windows
 2. Instalując ustawić usera i password jako postgres (można inne ale wtedy w .cfg bedzie trzeba to uwzględnić)
