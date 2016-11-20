@@ -1,12 +1,12 @@
 # BAI
 Bezpieczenstwo aplikacji internetowych
 
-0. Aby działały Gettery i Settery niezbędne jest zainstalowanie lombok.jar (znajdziecie to w katalogu Other), po zainstalowaniu należy zrestartowac IDE
+0. Aby działały Gettery i Settery niezbędne jest zainstalowanie lombok.jar (znajdziecie to w katalogu Other), po zainstalowaniu należy zrestartować IDE
 
 -------------------------------------------------------------------------------------------------------------
 1. Pobrać i zainstalować PostgreSQL wersja dowolna (ja mam 9.5) http://www.enterprisedb.com/products-services-training/pgdownload#windows
 2. Instalując ustawić usera i password jako postgres (można inne ale wtedy w .cfg bedzie trzeba to uwzględnić)
-3. Uruchomić pgAdmin, stworzyć bazę danych na local host (domyślnie localhost:5432 i niech tak zostanie ) o nazwie  BAI_DATABASE
+3. Uruchomić pgAdmin, stworzyć bazę danych na localhost (domyślnie localhost:5432 i niech tak zostanie ) o nazwie  BAI_DATABASE
 4. Połączyć się ze stworzoną bazą danych i dodać nowy schemat o nazwie bai
 
 -------------------------------------------------------------------------------------------------------------

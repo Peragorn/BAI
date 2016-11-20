@@ -41,7 +41,7 @@ public class Login extends HttpServlet {
 		user = userBusiness.login(user);
 		
 		if(user != null){
-			session.setAttribute("user", user);
+			session.setAttribute("user", user.getName());
 			session.setMaxInactiveInterval(300);
 			response.sendRedirect("/BAI");			
 		}

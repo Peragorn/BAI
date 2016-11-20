@@ -21,26 +21,7 @@
 <body>
 
 
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-					aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="index.html">BAI</a>
-			</div>
-			<div id="navbar" class="collapse navbar-collapse">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="">Rejestracja</a></li>
-					<li><a href="login.html">Logowanie</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+	<jsp:include page="header.jsp" />
 	<br />
 	<br />
 	<br />
@@ -51,9 +32,9 @@
 		<div class="starter-template">
 			<form action="register" method="get" class="form-signin">
 			<label for="login" class="sr-only">Login</label>
-        	<input type="text" id="login" name="login" class="form-control" placeholder="Wprowadź login" required autofocus>
-			<label for="password" class="sr-only">Hasło</label>
-        	<input type="password" id="password" name="password" class="form-control" placeholder="Wprowadź hasło" required>
+        	<input type="text" id="login" name="login" class="form-control" placeholder="Wprowad&#378; login" required autofocus>
+			<label for="password" class="sr-only">Has&#322;o</label>
+        	<input type="password" id="password" name="password" class="form-control" placeholder="Wprowad&#378; has&#322;o" required>
 			<button class="btn btn-lg btn-primary btn-block" type="submit" name="reqister" value="rejestruj">Rejestruj</button>
 			</form>
 		</div>
