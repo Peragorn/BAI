@@ -24,6 +24,11 @@
 
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="">Witaj: <%= session.getAttribute( "user" ) %></a></li>
+					<li>
+					<form action="logout" method="get" class="form-signin">
+						<button class="btn btn-lg btn-primary btn-block" type="submit" name="logout" value="wyloguj">Wyloguj</button>
+					</form>
+					</li>
 				</ul>
 			</div>
 		</div>
