@@ -4,7 +4,8 @@ public enum StatusValue {
 
 	addMessage("Dodaj"),
 	editMessage("Edytuj"),
-	removeMessage("Usun");
+	removeMessage("Usun"),
+	addPermission("Uprawnienia");
 	
 	private final String name;
 	

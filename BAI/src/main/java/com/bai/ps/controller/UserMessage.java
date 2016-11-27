@@ -55,13 +55,20 @@ public class UserMessage extends HttpServlet {
 			}
 			if(request.getParameter("removeMessage") != null && request.getParameter("removeMessage").equals(StatusValue.removeMessage.getName())){
 				Message messageToRemove = new Message();
-				
 				messageToRemove = (Message) request.getSession().getAttribute(request.getParameter("messageToRemove"));
 				messageBusiness.removeMessage(messageToRemove, user);
 				
 			}
 			if(request.getParameter("editMessage") != null && request.getParameter("editMessage").equals(StatusValue.editMessage.getName())){
 				
+			}
+			if(request.getParameter("addPermission") != null && request.getParameter("addPermission").equals(StatusValue.addPermission.getName())){
+				User selectedUser = (User) request.getSession().getAttribute(request.getParameter("comboboxPermission"));
+				Message message = new Message();
+				message = (Message) request.getSession().getAttribute(request.getParameter("messageToRemove"));
+				
+				allowedMessagesBusiness.addPermission(message, selectedUser, user);
+				System.out.println("dsada");
 			}
 			else{
 				List<Message> messageList = messageBusiness.getUserMessages(user);

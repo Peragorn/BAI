@@ -36,7 +36,8 @@
 			<tr>
 				<th>Wiadomo&#347;&#263;</th>
 				<th>Akcje</th>
-				<th>Uprawnienia</th>
+				<th>Uprawnienia (Nadaj)</th>
+				<th>Uprawnienia (Usu&#324;)</th>
 			</tr>
 		</thead>
 		<%
@@ -62,17 +63,34 @@
 		</td>
 		<td>
 			<form action="userMessage" method="get" class="form-signin" style="display: inline-block;">
-				<select class="selectpicker">
+				<select class="selectpicker" name="comboboxPermission">
 					<%
 						List<User> usersList= (List<User>) request.getAttribute("users");
 						for (User user : usersList) {
 					%>
 						<option value="<%=user%>" ><%=user.getName()%></option>
 					<%
+							session.setAttribute(user.toString(),user);
 						}
 					%>
 					</select>
 				<button class="btn btn-lg btn-warning btn-sm" type="submit" name="addPermission" value="Uprawnienia">Nadaj</button>
+			</form>
+		</td>
+		<td>
+				<form action="userMessage" method="get" class="form-signin" style="display: inline-block;">
+				<select class="selectpicker">
+					<%
+						List<User> usersPermissionList= (List<User>) request.getAttribute("users");
+						for (User user : usersPermissionList) {
+					%>
+						<option value="<%=user%>" ><%=user.getName()%></option>
+						
+					<%
+						}
+					%>
+					</select>
+				<button class="btn btn-lg btn-danger btn-sm" type="submit" name="addPermission" value="Uprawnienia">Usu&#324;</button>
 			</form>
 		</td>
 		<%
