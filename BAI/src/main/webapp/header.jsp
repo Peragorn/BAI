@@ -19,7 +19,7 @@
 				<ul class="nav navbar-nav">
 					<li><a href="register.jsp">Rejestracja</a></li>
 					<li><a href="login.jsp">Logowanie</a></li>
-					<li><a href="messages.jsp">Wiadomo&#347;ci</a></li>
+					<li><a href="userMessage">Wiadomo&#347;ci</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">

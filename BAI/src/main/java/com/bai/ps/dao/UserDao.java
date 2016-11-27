@@ -1,5 +1,6 @@
 package com.bai.ps.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -8,6 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import com.bai.ps.database.HibernateUtil;
+import com.bai.ps.model.Message;
 import com.bai.ps.model.User;
 
 
@@ -40,6 +42,19 @@ public class UserDao{
         else{
             return null;
         }
+	}
+
+	public List<User> getUsersList() {
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    Transaction tx = session.beginTransaction();
+
+        Criteria criteria = session.createCriteria(User.class);
+        
+        List<User> userList = new ArrayList<User>();
+        userList = criteria.list();
+        
+        session.close();
+        return userList;
 	}
 
 }

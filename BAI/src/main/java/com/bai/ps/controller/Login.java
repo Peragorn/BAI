@@ -41,12 +41,13 @@ public class Login extends HttpServlet {
 		user = userBusiness.login(user);
 		
 		if(user != null){
+			session.setAttribute("userObject", user);
 			session.setAttribute("user", user.getName());
 			session.setMaxInactiveInterval(300);
 			response.sendRedirect("/BAI");			
 		}
 		else{
-			response.sendRedirect("login.html");
+			response.sendRedirect("login.jsp");
 		}
 	}
 

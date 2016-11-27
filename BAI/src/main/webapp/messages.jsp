@@ -1,3 +1,7 @@
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="com.bai.ps.model.Message" %>
+<%@ page import="com.bai.ps.model.User" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +31,59 @@
 	<br />
 	<br />
 
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Wiadomo&#347;&#263;</th>
+				<th>Akcje</th>
+				<th>Uprawnienia</th>
+			</tr>
+		</thead>
+		<%
+			List<Message> messageList = (List<Message>) request.getAttribute("message");
+			for (Message message : messageList) {
+		%>
+		<tr>
+		<td><%=message.getText()%></td>
+		<td>
+			<form action="userMessage" method="get" class="form-signin" style="display: inline-block;">
+				<%
+					session.setAttribute(message.toString(),message);
+				%>
+				<button class="btn btn-lg btn-warning btn-sm" type="submit" name="editMessage" value="Edytuj">Edytuj</button>
+			</form>
+			<form action="userMessage" method="get" class="form-signin" style="display: inline-block;">
+				<%
+					session.setAttribute(message.toString(),message);
+				%>
+				<input type="hidden" name="messageToRemove" value="<%=message%>" />
+				<button class="btn btn-lg btn-danger btn-sm" type="submit" name="removeMessage" value="Usun">Usu&#324;</button>
+			</form>	
+		</td>
+		<td>
+			<form action="userMessage" method="get" class="form-signin" style="display: inline-block;">
+				<select class="selectpicker">
+					<%
+						List<User> usersList= (List<User>) request.getAttribute("users");
+						for (User user : usersList) {
+					%>
+						<option value="<%=user%>" ><%=user.getName()%></option>
+					<%
+						}
+					%>
+					</select>
+				<button class="btn btn-lg btn-warning btn-sm" type="submit" name="addPermission" value="Uprawnienia">Nadaj</button>
+			</form>
+		</td>
+		<%
+			}
+		%>
+		</tr>
+	</table>
+	<form action="userMessage" method="get" class="form-signin">
+		<textarea  type="text" id="newMessage" name="newMessage" class="form-control" placeholder="Wprowad&#378; now&#261; wiadomo&#347;&#263;" style="width: 30%"></textarea>
+		<button class="btn btn-lg btn-primary btn-sm" type="submit" name="addMessage" value="Dodaj">Dodaj</button>
+	</form>
 </body>
 </body>
 </html>

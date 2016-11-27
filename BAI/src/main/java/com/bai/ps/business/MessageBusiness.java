@@ -23,12 +23,22 @@ public class MessageBusiness {
 		}
 	}
 	
+	/**
+	 * Usuwa wiadomosc, wczesniej sprawdzaja czy zalogowany uzytkownik jest jej autorem
+	 * @param messageToRemove wiadomosc do usuniecia
+	 * @param user musi byc autorem wiadomosci
+	 */
 	public void removeMessage(Message messageToRemove, User user){
 		if(user.getName().equals(getMessageAuthor(messageToRemove).getName())){
 			this.messageDao.removeMessage(messageToRemove);
 		}
 	}
 	
+	/**
+	 * Metoda zwraca autora wiadomosci
+	 * @param message 
+	 * @return autor wiadomosci
+	 */
 	public User getMessageAuthor(Message message){
 		if(message.getUser_id() != null){
 			return this.messageDao.getMessageAuthor(message);
@@ -41,5 +51,9 @@ public class MessageBusiness {
 		if(getMessageAuthor(messageToEdit).getName().equals(user.getName()) || allowed.isAllowedForUser(user, messageToEdit)){
 			this.messageDao.editMessage(messageToEdit);
 		}
+	}
+	
+	public List<Message>getUserMessages(User user){
+		return this.messageDao.getUserMessages(user);
 	}
 }

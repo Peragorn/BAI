@@ -54,6 +54,17 @@ public class AllowedMessagesDao {
         }
 	}
 
+	public List<AllowedMessages> findPermissionIds(Message id) {
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    Transaction tx = session.beginTransaction();
+
+        Criteria criteria = session.createCriteria(AllowedMessages.class);
+        
+        criteria.add(Restrictions.eq("message_id", id));
+        List<AllowedMessages> list = criteria.list();
+        session.close();
+		return list;
+	}
 	public List<User> findAllAllowedUser(Message message) {
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    Transaction tx = session.beginTransaction();

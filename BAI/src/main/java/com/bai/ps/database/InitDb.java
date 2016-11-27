@@ -22,9 +22,9 @@ public class InitDb {
 		session.save(user);
 		
 		User user1 = new User();
-		user1.setName("Michał");
-		user1.setPassword_hash("michał");
-		user1.setSalt("michał".hashCode());
+		user1.setName("Michal");
+		user1.setPassword_hash("michal");
+		user1.setSalt("michal".hashCode());
 		user1.setLast_login(new Date());
 		session.save(user1);
 		
@@ -50,7 +50,7 @@ public class InitDb {
 		
 		Message message1 = new Message();
 		message1.setUser_id(user1);
-		message1.setText("Witaj Michał");
+		message1.setText("Witaj Michal");
 		message1.setMod("");
 		session.save(message1);
 		
