@@ -21,4 +21,7 @@ public class UserBusiness{
 		return this.userDao.getUsersList();
 	}
 
+	public User getUserByID(long id){
+		return this.userDao.getUserByID(id);
+	}
 }

@@ -32,6 +32,9 @@ public class MessageBusiness {
 		if(user.getName().equals(getMessageAuthor(messageToRemove).getName())){
 			this.messageDao.removeMessage(messageToRemove);
 		}
+		else{
+			System.out.println("Nie jestes wlascicielem tej wiadomosci by moc ja usunac!");
+		}
 	}
 	
 	/**
@@ -46,14 +49,19 @@ public class MessageBusiness {
 		return message.getUser_id();
 	}
 	
-	public void editMessage(User user, Message messageToEdit){
+	public void editMessage(User user, Message messageToEdit, String editedText){
 		AllowedMessagesBusiness allowed = new AllowedMessagesBusiness();
 		if(getMessageAuthor(messageToEdit).getName().equals(user.getName()) || allowed.isAllowedForUser(user, messageToEdit)){
+			messageToEdit.setText(editedText);
 			this.messageDao.editMessage(messageToEdit);
 		}
 	}
 	
 	public List<Message>getUserMessages(User user){
 		return this.messageDao.getUserMessages(user);
+	}
+	
+	public Message getMessageByID(long id){
+		return this.messageDao.getMessageByID(id);
 	}
 }

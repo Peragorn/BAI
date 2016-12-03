@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.bai.ps.business.AllowedMessagesBusiness;
 import com.bai.ps.business.MessageBusiness;
 import com.bai.ps.business.UserBusiness;
+import com.bai.ps.dao.MessageDao;
+import com.bai.ps.dao.UserDao;
 import com.bai.ps.model.AllowedMessages;
 import com.bai.ps.model.Message;
 import com.bai.ps.model.StatusValue;
@@ -34,6 +36,8 @@ public class UserMessage extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User user = new User();
+		MessageDao messageDao = new MessageDao();
+		UserDao userDao = new UserDao();
 		user = (User) request.getSession().getAttribute( "userObject" );
 		request.getParameter("addMessage");
 		if(user != null){
@@ -55,7 +59,8 @@ public class UserMessage extends HttpServlet {
 			}
 			if(request.getParameter("removeMessage") != null && request.getParameter("removeMessage").equals(StatusValue.removeMessage.getName())){
 				Message messageToRemove = new Message();
-				messageToRemove = (Message) request.getSession().getAttribute(request.getParameter("messageToRemove"));
+//				messageToRemove = (Message) request.getSession().getAttribute(request.getParameter("messageToRemove"));
+				messageToRemove = messageDao.getMessageByID(Integer.parseInt(request.getParameter("messageToRemoveID")));
 				messageBusiness.removeMessage(messageToRemove, user);
 				
 			}
@@ -63,14 +68,15 @@ public class UserMessage extends HttpServlet {
 				
 			}
 			if(request.getParameter("addPermission") != null && request.getParameter("addPermission").equals(StatusValue.addPermission.getName())){
-				User selectedUser = (User) request.getSession().getAttribute(request.getParameter("comboboxPermission"));
+//				User selectedUser = (User) request.getSession().getAttribute(request.getParameter("comboboxPermission"));
+				User selectedUser = (User) userDao.getUserByID(Integer.parseInt(request.getParameter("comboboxPermission")));
 				Message message = new Message();
-				message = (Message) request.getSession().getAttribute(request.getParameter("messageToRemove"));
+				message = messageDao.getMessageByID(Integer.parseInt(request.getParameter("premissionMessageId")));
 				
 				allowedMessagesBusiness.addPermission(message, selectedUser, user);
-				System.out.println("dsada");
+				
 			}
-			else{
+//			else{
 				List<Message> messageList = messageBusiness.getUserMessages(user);
 				request.setAttribute("message", messageList);
 				
@@ -78,7 +84,7 @@ public class UserMessage extends HttpServlet {
 				request.setAttribute("users", userList);
 				
 				request.getRequestDispatcher("/messages.jsp").forward(request, response);
-			}
+//			}
 		}
 		else{
 			System.err.println("Blad UserMessage.java, Nie jestes zalogowany");

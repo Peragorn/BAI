@@ -47,17 +47,16 @@
 		<tr>
 		<td><%=message.getText()%></td>
 		<td>
-			<form action="userMessage" method="get" class="form-signin" style="display: inline-block;">
-				<%
-					session.setAttribute(message.toString(),message);
-				%>
-				<button class="btn btn-lg btn-warning btn-sm" type="submit" name="editMessage" value="Edytuj">Edytuj</button>
+			<form action="editMessage" method="get" class="form-signin" style="display: inline-block;">
+					<input type="hidden" name="messageID" value="<%=message.getMessage_id()%>" />
+				<button class="btn btn-lg btn-warning btn-sm" type="submit" name="editMessage" value="edit">Edytuj</button>
 			</form>
 			<form action="userMessage" method="get" class="form-signin" style="display: inline-block;">
 				<%
 					session.setAttribute(message.toString(),message);
 				%>
-				<input type="hidden" name="messageToRemove" value="<%=message%>" />
+				<%-- <input type="hidden" name="messageToRemove" value="<%=message%>" /> --%>
+				<input type="hidden" name="messageToRemoveID" value="<%=message.getMessage_id()%>" />
 				<button class="btn btn-lg btn-danger btn-sm" type="submit" name="removeMessage" value="Usun">Usu&#324;</button>
 			</form>	
 		</td>
@@ -68,29 +67,20 @@
 						List<User> usersList= (List<User>) request.getAttribute("users");
 						for (User user : usersList) {
 					%>
-						<option value="<%=user%>" ><%=user.getName()%></option>
+						<option value="<%=user.getUser_id()%>" ><%=user.getName()%></option>
 					<%
 							session.setAttribute(user.toString(),user);
 						}
 					%>
 					</select>
+					<input type="hidden" name="premissionMessageId" value="<%=message.getMessage_id()%>" />
 				<button class="btn btn-lg btn-warning btn-sm" type="submit" name="addPermission" value="Uprawnienia">Nadaj</button>
 			</form>
 		</td>
 		<td>
-				<form action="userMessage" method="get" class="form-signin" style="display: inline-block;">
-				<select class="selectpicker">
-					<%
-						List<User> usersPermissionList= (List<User>) request.getAttribute("users");
-						for (User user : usersPermissionList) {
-					%>
-						<option value="<%=user%>" ><%=user.getName()%></option>
-						
-					<%
-						}
-					%>
-					</select>
-				<button class="btn btn-lg btn-danger btn-sm" type="submit" name="addPermission" value="Uprawnienia">Usu&#324;</button>
+			<form action="removePermission" method="get" class="form-signin" style="display: inline-block;">
+					<input type="hidden" name="messageID" value="<%=message.getMessage_id()%>" />
+				<button class="btn btn-lg btn-danger btn-sm" type="submit" name="addPermission" value="Uprawnienia" >Usu&#324;</button>
 			</form>
 		</td>
 		<%

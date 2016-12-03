@@ -97,21 +97,22 @@ public class MessageDao {
 	}
 
 	/**
-	 * Metoda pobiera wszystkie wiadomosc napisane przez zalogowanego uzytkownika
+	 * Metoda pobiera wszystkie wiadomosc napisane przez zalogowanego uzytkownika oraz te do ktorych ma uprawnienia
 	 * @param user zalogowany uzytkownik
 	 * @return lista wiadomosci zalogowanego uzytkownika
 	 */
 	//TODO dopisac pobieranie takze wiadomosci do ktorych uzytkownik ma uprawnienia
 	public List<Message> getUserMessages(User user) {
-	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-	    Transaction tx = session.beginTransaction();
-        Criteria criteria = session.createCriteria(Message.class);
-        criteria.add(Restrictions.eq("user_id", user));
-        List<Message> messageList = new ArrayList<Message>();
-        messageList = criteria.list();
-        
-        session.close();   
-        return messageList;
+//	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//	    Transaction tx = session.beginTransaction();
+//        Criteria criteria = session.createCriteria(Message.class);
+//        criteria.add(Restrictions.eq("user_id", user));
+//        List<Message> messageList = new ArrayList<Message>();
+//        messageList = criteria.list();
+//        
+//        session.close();   
+		AllowedMessagesDao amd = new AllowedMessagesDao();
+        return amd.findAllMessageForUser(user);
 	}
 	/**
 	 * Metoda znajduje wiadomosc 
@@ -136,4 +137,17 @@ public class MessageDao {
         
         return msg;
 	}
+	
+	public Message getMessageByID(long id){
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    Transaction tx = session.beginTransaction();
+        Criteria criteria = session.createCriteria(Message.class);
+        criteria.add(Restrictions.eq("message_id", id));
+        Message messageList = new Message();
+        messageList = (Message) criteria.list().get(0);
+        
+        session.close();   
+        return messageList;
+	}
+	
 }

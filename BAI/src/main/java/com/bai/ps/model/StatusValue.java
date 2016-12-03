@@ -3,9 +3,10 @@ package com.bai.ps.model;
 public enum StatusValue {
 
 	addMessage("Dodaj"),
-	editMessage("Edytuj"),
+	editMessage("EdytujWiadomosc"),
 	removeMessage("Usun"),
-	addPermission("Uprawnienia");
+	addPermission("Uprawnienia"),
+	removePermisson("usunUprawnienia");
 	
 	private final String name;
 	

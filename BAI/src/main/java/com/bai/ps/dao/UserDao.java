@@ -57,4 +57,15 @@ public class UserDao{
         return userList;
 	}
 
+	public User getUserByID(long id){
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    Transaction tx = session.beginTransaction();
+        Criteria criteria = session.createCriteria(User.class);
+        criteria.add(Restrictions.eq("user_id", id));
+        User u = new User();
+        u = (User) criteria.list().get(0);
+        
+        session.close();   
+        return u;
+	}
 }
