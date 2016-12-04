@@ -40,6 +40,12 @@
   	<description></description>
   	<servlet-class>com.bai.ps.controller.EditMessage</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>UserPanel</servlet-name>
+  	<display-name>UserPanel</display-name>
+  	<description></description>
+  	<servlet-class>com.bai.ps.controller.UserPanel</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>Register</servlet-name>
   	<url-pattern>/register</url-pattern>
@@ -67,5 +73,9 @@
   <servlet-mapping>
   	<servlet-name>EditMessage</servlet-name>
   	<url-pattern>/editMessage</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UserPanel</servlet-name>
+  	<url-pattern>/userPanel</url-pattern>
   </servlet-mapping>
 </web-app>

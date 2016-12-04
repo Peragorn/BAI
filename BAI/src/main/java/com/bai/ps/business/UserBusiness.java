@@ -14,7 +14,11 @@ public class UserBusiness{
 	}
 
 	public User login(User user) {
-		return this.userDao.login(user);
+		User userloged = this.userDao.login(user);
+		if(userloged == null){
+			this.userDao.setLastFailLogin(user);
+		}
+		return userloged;
 	}
 	
 	public List<User> getUsersList(){
@@ -23,5 +27,13 @@ public class UserBusiness{
 
 	public User getUserByID(long id){
 		return this.userDao.getUserByID(id);
+	}
+
+	/**
+	 * Metoda do ustawiania po ilu probach ma zablokowac konto
+	 * @param n
+	 */
+	public void setLoginAttemptCounter(User user){
+		this.userDao.setLoginAttemptCounter(user);
 	}
 }

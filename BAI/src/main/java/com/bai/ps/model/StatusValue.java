@@ -6,7 +6,8 @@ public enum StatusValue {
 	editMessage("EdytujWiadomosc"),
 	removeMessage("Usun"),
 	addPermission("Uprawnienia"),
-	removePermisson("usunUprawnienia");
+	removePermisson("usunUprawnienia"),
+	lock("blokuj");
 	
 	private final String name;
 	

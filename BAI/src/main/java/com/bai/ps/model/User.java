@@ -37,5 +37,25 @@ public class User implements Serializable {
 
 	@Column(name = "last_login")
 	@Getter @Setter private Date last_login;
-
+	
+	@Column(name = "last_fail_login")
+	@Getter @Setter private Date last_fail_login;
+	
+	@Column(name = "loginAttemptCounter")
+	@Getter @Setter private int loginAttemptCounter;
+	
+	@Column(name = "loginAttempt")
+	@Getter @Setter private int loginAttempt;
+	
+	@Column(name = "loginAttemptCounterToSucces")
+	@Getter @Setter private int loginAttemptCounterToSucces;
+	
+//	@Column(name = "secretQuestion")
+//	@Getter @Setter private String secretQuestion;
+//	
+//	@Column(name = "secretAnswer")
+//	@Getter @Setter private String secretAnswer;
+	
+	@Column(name = "accountLocked")
+	@Getter @Setter private boolean accountLocked;
 }

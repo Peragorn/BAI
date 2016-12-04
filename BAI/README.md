@@ -18,3 +18,7 @@ a zakomentować
 
 7. uruchomić aplikacje na serwerze (ja robię to na apache 7 )
 8. http://localhost:8080/BAI/
+
+
+Sprawozdanie
+https://docs.google.com/document/d/1YbaOANb4KcjW3e4dAC_VcgPWrJzHxDSgW7H_oVGCbWw/edit?usp=sharing
