@@ -1,6 +1,7 @@
 package com.bai.ps.dao;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -105,6 +106,10 @@ public class UserDao{
 	    	actualUser.setAccountLocked(true);
 	    }
 	    
+	    Calendar calendar = Calendar.getInstance();
+	    calendar.add(Calendar.SECOND, (int) Math.pow(2, actualUser.getLoginAttemptCounter()));
+	    actualUser.setAccountLoginBlocked(calendar.getTime());
+	    
 	    session.update(actualUser);
 	    tx.commit();
 	}
@@ -120,5 +125,28 @@ public class UserDao{
         
         session.close();
         return list.get(0);
+	}
+
+	/**
+	 * Metoda srpawdza czy mozemy zalogowac sie do konta. Glowny parametr to accountLoginBlocked jezeli jego czas jest wiekszy niz aktualny to oznacza ze musimy jeszcze odczekac.
+	 * @param user
+	 * @return
+	 */
+	public Date isLoginAvailable(User user) {
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    Transaction tx = session.beginTransaction();
+
+        Criteria criteria = session.createCriteria(User.class);
+        criteria.add(Restrictions.like("name", user.getName()));
+        criteria.add(Restrictions.ge("accountLoginBlocked", new Date()));
+        
+        List<User> list = criteria.list();
+        session.close();
+        if(list != null && !list.isEmpty()){
+        	return list.get(0).getAccountLoginBlocked();
+        }
+        else{
+        	return null;
+        }
 	}
 }

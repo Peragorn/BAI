@@ -58,4 +58,7 @@ public class User implements Serializable {
 	
 	@Column(name = "accountLocked")
 	@Getter @Setter private boolean accountLocked;
+	
+	@Column(name = "accountLoginBlocked")
+	@Getter @Setter private Date accountLoginBlocked;
 }

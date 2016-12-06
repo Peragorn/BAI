@@ -1,5 +1,7 @@
 package com.bai.ps.business;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.bai.ps.dao.UserDao;
@@ -14,7 +16,18 @@ public class UserBusiness{
 	}
 
 	public User login(User user) {
-		User userloged = this.userDao.login(user);
+		User userloged = null;
+		Date timeToWait = this.userDao.isLoginAvailable(user);
+		if( timeToWait == null){
+			userloged = this.userDao.login(user);
+		}
+		else{
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(timeToWait);
+			System.out.println("Kolejna probe logowanie mozesz podjac o godzinie " + cal.getTime().getHours()+":"+cal.getTime().getMinutes()+":"+cal.getTime().getSeconds() );
+			return null;		
+		}
+				
 		if(userloged == null){
 			this.userDao.setLastFailLogin(user);
 		}
