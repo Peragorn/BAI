@@ -20,6 +20,7 @@
 					<li><a href="register.jsp">Rejestracja</a></li>
 					<li><a href="login.jsp">Logowanie</a></li>
 					<li><a href="userMessage">Wiadomo&#347;ci</a></li>
+					<li><a href="login_ps4.jsp">Logowanie_Ps4</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">

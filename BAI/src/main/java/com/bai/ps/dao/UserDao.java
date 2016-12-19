@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -13,6 +14,7 @@ import org.hibernate.criterion.Restrictions;
 import com.bai.ps.database.HibernateUtil;
 import com.bai.ps.model.Message;
 import com.bai.ps.model.User;
+import com.bai.ps.model.UserPasswordMask;
 
 
 public class UserDao{
@@ -114,7 +116,7 @@ public class UserDao{
 	    tx.commit();
 	}
 	
-	private User getUserByName(String name){
+	public User getUserByName(String name){
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    Transaction tx = session.beginTransaction();
 
@@ -148,5 +150,56 @@ public class UserDao{
         else{
         	return null;
         }
+	}
+
+	public UserPasswordMask getUserPasswordMaskByUserId(User user) {
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    Transaction tx = session.beginTransaction();
+        Criteria criteria = session.createCriteria(UserPasswordMask.class);
+        criteria.add(Restrictions.eq("user_id", user));
+        criteria.add(Restrictions.eq("active", true));
+        UserPasswordMask upm = new UserPasswordMask();
+        upm = (UserPasswordMask) criteria.list().get(0);
+        
+        session.close();   
+        return upm;
+	}
+	
+	public UserPasswordMask loginPwdMask(UserPasswordMask userPwdMask, String pwd) {
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    Transaction tx = session.beginTransaction();
+
+        Criteria criteria = session.createCriteria(UserPasswordMask.class);
+        criteria.add(Restrictions.like("password_hash", pwd));
+        criteria.add(Restrictions.eq("active", true));
+        UserPasswordMask upw = (UserPasswordMask) criteria.uniqueResult();
+        session.close();
+        
+        return upw;
+	}
+	
+	public boolean changeUserMask(UserPasswordMask userPwdMask){
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    Transaction tx = session.beginTransaction();
+        Criteria criteria = session.createCriteria(UserPasswordMask.class);
+        Random rnd = new Random();
+        
+        criteria.add(Restrictions.eq("user_id", userPwdMask.getUser_id()));
+        criteria.add(Restrictions.eq("active", false));
+        List<UserPasswordMask> result = criteria.list();
+        
+        if(result != null && !result.isEmpty()){
+        	int index = rnd.nextInt(result.size());
+        	//new mask
+        	UserPasswordMask upm = result.get(index);
+        	upm.setActive(true);
+        	session.update(upm);
+        	//old mask
+        	userPwdMask.setActive(false);
+        	session.update(userPwdMask);
+        	tx.commit();
+        	return true;
+        }
+        return false;
 	}
 }

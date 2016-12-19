@@ -46,6 +46,12 @@
   	<description></description>
   	<servlet-class>com.bai.ps.controller.UserPanel</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>Login_ps4</servlet-name>
+  	<display-name>Login_ps4</display-name>
+  	<description></description>
+  	<servlet-class>com.bai.ps.controller.Login_ps4</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>Register</servlet-name>
   	<url-pattern>/register</url-pattern>
@@ -77,5 +83,9 @@
   <servlet-mapping>
   	<servlet-name>UserPanel</servlet-name>
   	<url-pattern>/userPanel</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Login_ps4</servlet-name>
+  	<url-pattern>/Login_ps4</url-pattern>
   </servlet-mapping>
 </web-app>

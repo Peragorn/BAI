@@ -3,7 +3,6 @@ package com.bai.ps.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jdt.internal.compiler.lookup.ReductionResult;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;

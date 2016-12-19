@@ -14,11 +14,12 @@
 
 		<property name="show_sql">false</property>
 
-		<!-- <property name="hibernate.hbm2ddl.auto">create-drop</property> -->
+<!-- 		<property name="hibernate.hbm2ddl.auto">create-drop</property> -->
 		<property name="hibernate.hbm2ddl.auto">validate</property>
 
 		<mapping class="com.bai.ps.model.User" package="com.bai.model" />
 		<mapping class="com.bai.ps.model.Message" package="com.bai.model" />
 		<mapping class="com.bai.ps.model.AllowedMessages" package="com.bai.model" />
+		<mapping class="com.bai.ps.model.UserPasswordMask" package="com.bai.model" />
 	</session-factory>
 </hibernate-configuration>
