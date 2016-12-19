@@ -52,6 +52,12 @@
   	<description></description>
   	<servlet-class>com.bai.ps.controller.Login_ps4</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ChangePassword</servlet-name>
+  	<display-name>ChangePassword</display-name>
+  	<description></description>
+  	<servlet-class>com.bai.ps.controller.ChangePassword</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>Register</servlet-name>
   	<url-pattern>/register</url-pattern>
@@ -87,5 +93,9 @@
   <servlet-mapping>
   	<servlet-name>Login_ps4</servlet-name>
   	<url-pattern>/Login_ps4</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ChangePassword</servlet-name>
+  	<url-pattern>/ChangePassword</url-pattern>
   </servlet-mapping>
 </web-app>

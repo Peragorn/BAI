@@ -34,7 +34,7 @@
 			<label for="login" class="sr-only">Login</label>
         	<input type="text" id="login" name="login" class="form-control" placeholder="Wprowad&#378; login" required autofocus>
 			<label for="password" class="sr-only">Has&#322;o</label>
-        	<input type="password" id="password" name="password" class="form-control" placeholder="Wprowad&#378; has&#322;o" required>
+        	<input type="password" pattern=".{8,16}" id="password" name="password" class="form-control" placeholder="Wprowad&#378; has&#322;o 8-16 znakow" required>
 			<button class="btn btn-lg btn-primary btn-block" type="submit" name="reqister" value="rejestruj">Rejestruj</button>
 			</form>
 		</div>

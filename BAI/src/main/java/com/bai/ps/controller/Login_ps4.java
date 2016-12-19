@@ -85,6 +85,8 @@ public class Login_ps4 extends HttpServlet {
 							response.sendRedirect("login.jsp");
 						}
 					}
+				}else{
+					// wywolac blad logowania
 				}
 				
 			}
