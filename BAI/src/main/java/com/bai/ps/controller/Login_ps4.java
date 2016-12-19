@@ -34,7 +34,7 @@ public class Login_ps4 extends HttpServlet {
 		HttpSession session = request.getSession();
 		UserBusiness userBusiness = new UserBusiness();
 		
-		String mask = "0000000000000000";
+		String mask = userBusiness.generateMask("temporaryPWD");
 		char[] passwordMask = null;
 		
 		if(action.equals("Dalej")){
@@ -82,14 +82,41 @@ public class Login_ps4 extends HttpServlet {
 							response.sendRedirect("/BAI");			
 						}
 						else{
-							response.sendRedirect("login.jsp");
+							response.sendRedirect("login_ps4.jsp");
 						}
 					}
 				}else{
-					// wywolac blad logowania
+					user.setPassword_hash("");
+					User userLoged = userBusiness.login(user);
+					
+					if(userLoged != null){
+						session.setAttribute("userObject", userLoged);
+						session.setAttribute("user", userLoged.getName());
+						session.setMaxInactiveInterval(300);
+						response.sendRedirect("/BAI");			
+					}
+					else{
+						response.sendRedirect("login_ps4.jsp");
+					}
 				}
 				
+			}else{
+				user = new User();
+				user.setName(login);
+				user.setPassword_hash("temporaryPWD");
+				user = userBusiness.login(user);
+				
+				if(user != null){
+					session.setAttribute("userObject", user);
+					session.setAttribute("user", user.getName());
+					session.setMaxInactiveInterval(300);
+					response.sendRedirect("/BAI");			
+				}
+				else{
+					response.sendRedirect("login_ps4.jsp");
+				}
 			}
+			
 		}
 	}
 

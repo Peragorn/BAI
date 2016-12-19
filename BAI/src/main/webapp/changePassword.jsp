@@ -31,6 +31,14 @@
 	<div class="container">
 		<div class="starter-template">
 
+					<%
+						if (request.getAttribute("info") != null) {
+					%>
+					<div class="alert alert-warning" role="alert"><%=request.getAttribute("info")%></div>
+					<%
+						}
+					%>
+					
 			<h3>Stare haslo:</h3>
 			<form action="ChangePassword" method="get" class="form-signin">
 				<table class="table">

@@ -3,6 +3,7 @@ package com.bai.ps.business;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import com.bai.ps.dao.UnregisteredUserDao;
 import com.bai.ps.dao.UserDao;
@@ -95,5 +96,43 @@ public class UserBusiness{
 	
 	public boolean changeUserMask(UserPasswordMask userPwdMask){
 		return this.userDao.changeUserMask(userPwdMask);
+	}
+
+	public void changePassword(UserPasswordMask userPasswordMask, String pass) {
+		this.userDao.changePassword(userPasswordMask, pass);
+	}
+	
+	public static String generateMask(String pwd) {
+
+		StringBuilder result = new StringBuilder("0000000000000000");
+
+		Random rnd = new Random();
+		int length = pwd.length() / 2;
+
+		if (length > 5) {
+
+			int lengthMask = 0;
+			do {
+				lengthMask = rnd.nextInt(length + 1);
+			} while (lengthMask < 5);
+
+			for (int j = 0; j < lengthMask; j++) {
+				int charPostion = 0;
+				do {
+					charPostion = rnd.nextInt(pwd.length());
+				} while (result.charAt(charPostion) == '1');
+				
+				result.setCharAt(charPostion, '1');
+			}
+		} else {
+			for (int j = 0; j < 5; j++) {
+				int charPostion = 0;
+				do {
+					charPostion = rnd.nextInt(pwd.length());
+				} while (result.charAt(charPostion) == '1');
+				result.setCharAt(charPostion, '1');
+			}
+		}
+		return result.toString();
 	}
 }

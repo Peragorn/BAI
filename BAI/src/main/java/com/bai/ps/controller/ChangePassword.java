@@ -44,6 +44,38 @@ public class ChangePassword extends HttpServlet {
 				request.getRequestDispatcher("/changePassword.jsp").forward(request, response);
 			}else if(action.equals("Zmien")){
 				
+				UserPasswordMask userPasswordMask = userBusiness.getUserPasswordMaskByUserId(user);
+				char[] passwordMask = userPasswordMask.getMask().toCharArray();
+				StringBuilder result = new StringBuilder("");
+				
+				if(request.getParameter("password").length() < 8 || 
+						request.getParameter("password").length() > 16){
+					
+					request.setAttribute("info", "Haslo musi miec 8-16 znakow.");
+					request.setAttribute("passwordMask", passwordMask);
+					request.getRequestDispatcher("/changePassword.jsp").forward(request, response);
+					return;
+				}
+				
+				for (int i=0;i<passwordMask.length;i++) {
+					if(passwordMask[i] == '1'){
+						String passChar = request.getParameter("pass[" + i + "]");
+						if(passChar != null && passChar.length() == 1){
+							result.append(passChar);
+						}
+					}
+				}
+				
+				if(userBusiness.loginPwdMask(userPasswordMask, result.toString())){
+				
+					userBusiness.changePassword(userPasswordMask, request.getParameter("password"));
+					response.sendRedirect("/BAI");	
+					
+				}else{
+					request.setAttribute("info", "Bledne stare haslo.");
+					request.setAttribute("passwordMask", passwordMask);
+					request.getRequestDispatcher("/changePassword.jsp").forward(request, response);
+				}
 			}
 			
 		}else{

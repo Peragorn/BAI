@@ -149,7 +149,10 @@ public class UserDao{
         List<User> list = criteria.list();
         
         session.close();
-        return list.get(0);
+        if(list != null && !list.isEmpty()){
+        	return list.get(0);
+        }
+        return null;
 	}
 
 	/**
@@ -296,5 +299,49 @@ public class UserDao{
         else{
         	return false;
         }
+	}
+
+	public void changePassword(UserPasswordMask userPasswordMask, String pass) {
+		
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    Transaction tx = session.beginTransaction();
+	    User user = userPasswordMask.getUser_id();
+	    user.setPassword_hash(pass);
+	    session.update(user);
+	    
+	    // Remove old
+        Criteria criteria = session.createCriteria(UserPasswordMask.class);
+        criteria.add(Restrictions.eq("user_id", userPasswordMask.getUser_id()));
+        List<UserPasswordMask> result = criteria.list();
+        
+        for(UserPasswordMask upm: result){
+        	session.delete(upm);
+        }
+        
+	    // Generate masks
+		String mask = generateMask(user.getPassword_hash());
+		int salt = generateSalt();
+		
+		UserPasswordMask newUserPasswordMask = new UserPasswordMask();
+		newUserPasswordMask.setUser_id(user);
+		newUserPasswordMask.setMask(mask);
+		newUserPasswordMask.setActive(true);
+		newUserPasswordMask.setSalt(salt);
+		newUserPasswordMask.setPassword_hash(createHashForMaskAndSalt(mask,user.getPassword_hash(),salt));
+		session.save(newUserPasswordMask);
+		
+		for(int i=0; i<9; i++){
+			String mask2 = generateMask(user.getPassword_hash());
+			int salt2 = generateSalt();
+			
+			UserPasswordMask userPasswordMask2 = new UserPasswordMask();
+			userPasswordMask2.setUser_id(user);
+			userPasswordMask2.setMask(mask2);
+			userPasswordMask2.setActive(false);
+			userPasswordMask2.setSalt(salt2);
+			userPasswordMask2.setPassword_hash(createHashForMaskAndSalt(mask2,user.getPassword_hash(),salt2));
+			session.save(userPasswordMask2);
+		}
+	    tx.commit();
 	}
 }
