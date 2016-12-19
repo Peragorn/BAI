@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.bai.ps.dao.UnregisteredUserDao;
 import com.bai.ps.dao.UserDao;
 import com.bai.ps.model.User;
 import com.bai.ps.model.UserPasswordMask;
@@ -11,6 +12,8 @@ import com.bai.ps.model.UserPasswordMask;
 public class UserBusiness{
 	
 	public UserDao userDao = new UserDao();
+	
+	public UnregisteredUserDao unregisteredUserDao = new UnregisteredUserDao();
 
 	public void addUser(User user) {
 		this.userDao.addUser(user);
@@ -18,19 +21,39 @@ public class UserBusiness{
 
 	public User login(User user) {
 		User userloged = null;
-		Date timeToWait = this.userDao.isLoginAvailable(user);
-		if( timeToWait == null){
-			userloged = this.userDao.login(user);
+		if(this.userDao.isUserRegistered(user)){
+			Date timeToWait = this.userDao.isLoginAvailable(user);
+			if( timeToWait == null){
+				userloged = this.userDao.login(user);
+			}
+			else{
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(timeToWait);
+				System.out.println("Kolejna probe logowanie mozesz podjac o godzinie " + cal.getTime().getHours()+":"+cal.getTime().getMinutes()+":"+cal.getTime().getSeconds() );
+				return null;		
+			}
+			
+			if(userloged == null){
+				this.userDao.setLastFailLogin(user);
+			}
 		}
 		else{
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(timeToWait);
-			System.out.println("Kolejna probe logowanie mozesz podjac o godzinie " + cal.getTime().getHours()+":"+cal.getTime().getMinutes()+":"+cal.getTime().getSeconds() );
-			return null;		
-		}
+			if(this.unregisteredUserDao.isUserRegistered(user)){
+				Date timeToWait = this.unregisteredUserDao.isLoginAvailable(user);
+				if( timeToWait == null){
+					userloged = null;
+				}
+				else{
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(timeToWait);
+					System.out.println("Kolejna probe logowanie mozesz podjac o godzinie " + cal.getTime().getHours()+":"+cal.getTime().getMinutes()+":"+cal.getTime().getSeconds() );
+					return null;		
+				}
 				
-		if(userloged == null){
-			this.userDao.setLastFailLogin(user);
+				if(userloged == null){
+					this.unregisteredUserDao.setLastFailLogin(user);
+				}
+			}
 		}
 		return userloged;
 	}
