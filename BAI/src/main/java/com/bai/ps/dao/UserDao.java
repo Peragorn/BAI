@@ -278,4 +278,23 @@ public class UserDao{
 		Random rnd = new Random();
 		return rnd.nextInt(100);
 	}
+	
+	public boolean isUserRegistered(User user) {
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    Transaction tx = session.beginTransaction();
+
+        Criteria criteria = session.createCriteria(User.class);
+        criteria.add(Restrictions.like("name", user.getName()));
+        
+        List<User> list = criteria.list();
+        session.close();
+        
+        
+        if(list != null && !list.isEmpty()){
+        	return true;
+        }
+        else{
+        	return false;
+        }
+	}
 }

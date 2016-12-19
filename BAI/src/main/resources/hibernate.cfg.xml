@@ -21,5 +21,7 @@
 		<mapping class="com.bai.ps.model.Message" package="com.bai.model" />
 		<mapping class="com.bai.ps.model.AllowedMessages" package="com.bai.model" />
 		<mapping class="com.bai.ps.model.UserPasswordMask" package="com.bai.model" />
+		<mapping class="com.bai.ps.model.UnregisteredUser" package="com.bai.model" />
+		
 	</session-factory>
 </hibernate-configuration>
