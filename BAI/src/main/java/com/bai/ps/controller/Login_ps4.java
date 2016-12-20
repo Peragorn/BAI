@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.bai.ps.business.UserBusiness;
+import com.bai.ps.dao.UnregisteredUserDao;
+import com.bai.ps.model.UnregisteredUser;
 import com.bai.ps.model.User;
 import com.bai.ps.model.UserPasswordMask;
 
@@ -33,8 +35,9 @@ public class Login_ps4 extends HttpServlet {
 		String action = request.getParameter("action");
 		HttpSession session = request.getSession();
 		UserBusiness userBusiness = new UserBusiness();
+		UnregisteredUserDao ub = new UnregisteredUserDao();
 		
-		String mask = userBusiness.generateMask("temporaryPWD");
+		String mask = "1001010011001000";
 		char[] passwordMask = null;
 		
 		if(action.equals("Dalej")){
@@ -82,7 +85,19 @@ public class Login_ps4 extends HttpServlet {
 							response.sendRedirect("/BAI");			
 						}
 						else{
-							response.sendRedirect("login_ps4.jsp");
+							request.setAttribute("info", "Konto jest obecnie niedostepne.");
+							user = userBusiness.getUserByName(login);
+							if(user != null){
+								
+								request.setAttribute("down", "Kolejna proba mozliwa:" + user.getAccountLoginBlocked());
+							}else{
+								UnregisteredUser user2 = ub.getUserByName(login);
+								if(user2 != null){
+									
+									request.setAttribute("down", "Kolejna proba mozliwa:" + user2.getAccountLoginBlocked());
+								}
+							}
+							request.getRequestDispatcher("/login_ps4.jsp").forward(request, response);
 						}
 					}
 				}else{
@@ -96,7 +111,19 @@ public class Login_ps4 extends HttpServlet {
 						response.sendRedirect("/BAI");			
 					}
 					else{
-						response.sendRedirect("login_ps4.jsp");
+						request.setAttribute("info", "Konto jest obecnie niedostepne.");
+						user = userBusiness.getUserByName(login);
+						if(user != null){
+							
+							request.setAttribute("down", "Kolejna proba mozliwa:" + user.getAccountLoginBlocked());
+						}else{
+							UnregisteredUser user2 = ub.getUserByName(login);
+							if(user2 != null){
+								
+								request.setAttribute("down", "Kolejna proba mozliwa:" + user2.getAccountLoginBlocked());
+							}
+						}
+						request.getRequestDispatcher("/login_ps4.jsp").forward(request, response);
 					}
 				}
 				
@@ -113,7 +140,19 @@ public class Login_ps4 extends HttpServlet {
 					response.sendRedirect("/BAI");			
 				}
 				else{
-					response.sendRedirect("login_ps4.jsp");
+					request.setAttribute("info", "Konto jest obecnie niedostepne.");
+					user = userBusiness.getUserByName(login);
+					if(user != null){
+						
+						request.setAttribute("down", "Kolejna proba mozliwa:" + user.getAccountLoginBlocked());
+					}else{
+						UnregisteredUser user2 = ub.getUserByName(login);
+						if(user2 != null){
+							
+							request.setAttribute("down", "Kolejna proba mozliwa:" + user2.getAccountLoginBlocked());
+						}
+					}
+					request.getRequestDispatcher("/login_ps4.jsp").forward(request, response);
 				}
 			}
 			

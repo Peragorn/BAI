@@ -29,6 +29,22 @@
 	<br />
 	<div class="container">
 		<div class="starter-template">
+		
+							<%
+						if (request.getAttribute("info") != null) {
+					%>
+					<div class="alert alert-warning" role="alert"><%=request.getAttribute("info")%></div>
+					<%
+						}
+					%>
+												<%
+						if (request.getAttribute("down") != null) {
+					%>
+					<div class="alert alert-warning" role="alert"><%=request.getAttribute("down")%></div>
+					<%
+						}
+					%>
+				
 			<form action="Login_ps4" method="get" class="form-signin">
 			<label for="login" class="sr-only">Login</label>
         	<input type="text" id="login" name="login" class="form-control" placeholder="Wprowad&#378; login" required autofocus>
