@@ -60,8 +60,12 @@ public class Login extends HttpServlet {
 			}else{
 				UnregisteredUser user2 = ub.getUserByName(login);
 				if(user2 != null){
-					
-					request.setAttribute("down", "Kolejna proba mozliwa:" + user2.getAccountLoginBlocked());
+					if(user2.isAccountLocked()){
+						request.setAttribute("lock", "Konto zablokowane");
+					}
+					else{
+						request.setAttribute("down", "Kolejna proba mozliwa:" + user2.getAccountLoginBlocked());
+					}
 				}
 			}
 			request.getRequestDispatcher("/login.jsp").forward(request, response);

@@ -3,6 +3,7 @@ package com.bai.ps.dao;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -21,7 +22,8 @@ public class UnregisteredUserDao {
 	    UnregisteredUser unregisteredUser = new UnregisteredUser();
 	    unregisteredUser.setName(user.getName());
 	    unregisteredUser.setPassword_hash(user.getPassword_hash());
-	    unregisteredUser.setLoginAttempt(5);
+	    int randomNum = ThreadLocalRandom.current().nextInt(2, 10 + 1);
+	    unregisteredUser.setLoginAttempt(randomNum);
 	    session.save(unregisteredUser);
 	    tx.commit();
 	}
