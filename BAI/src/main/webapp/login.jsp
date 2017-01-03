@@ -29,10 +29,10 @@
 	<br />
 	<div class="container">
 		<div class="starter-template">
-							<%
+					<%
 						if (request.getAttribute("lock") != null) {
 					%>
-					<div class="alert alert-erorr" role="alert"><%=request.getAttribute("lock")%></div>
+					<div class="alert alert-danger" role="alert"><%=request.getAttribute("lock")%></div>
 					<%
 						}
 					%>

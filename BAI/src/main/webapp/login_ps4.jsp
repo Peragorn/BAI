@@ -30,10 +30,10 @@
 	<div class="container">
 		<div class="starter-template">
 		
-							<%
-						if (request.getAttribute("info") != null) {
+					<%
+						if (request.getAttribute("lock") != null) {
 					%>
-					<div class="alert alert-warning" role="alert"><%=request.getAttribute("info")%></div>
+					<div class="alert alert-danger" role="alert"><%=request.getAttribute("lock")%></div>
 					<%
 						}
 					%>

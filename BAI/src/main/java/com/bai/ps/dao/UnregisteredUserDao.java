@@ -3,6 +3,7 @@ package com.bai.ps.dao;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.hibernate.Criteria;
@@ -21,7 +22,7 @@ public class UnregisteredUserDao {
 	    Transaction tx = session.beginTransaction();
 	    UnregisteredUser unregisteredUser = new UnregisteredUser();
 	    unregisteredUser.setName(user.getName());
-	    unregisteredUser.setPassword_hash(user.getPassword_hash());
+	    unregisteredUser.setPassword_hash(generateMask("temporaryPWD16"));
 	    int randomNum = ThreadLocalRandom.current().nextInt(2, 10 + 1);
 	    unregisteredUser.setLoginAttempt(randomNum);
 	    session.save(unregisteredUser);
@@ -95,7 +96,46 @@ public class UnregisteredUserDao {
         List<UnregisteredUser> list = criteria.list();
         
         session.close();
-        return list.get(0);
+        
+        if(list != null && !list.isEmpty()){
+        	return list.get(0);
+        }
+        return null;
+	}
+	
+	
+	private static String generateMask(String pwd) {
+
+		StringBuilder result = new StringBuilder("0000000000000000");
+
+		Random rnd = new Random();
+		int length = pwd.length() / 2;
+
+		if (length > 5) {
+
+			int lengthMask = 0;
+			do {
+				lengthMask = rnd.nextInt(length + 1);
+			} while (lengthMask < 5);
+
+			for (int j = 0; j < lengthMask; j++) {
+				int charPostion = 0;
+				do {
+					charPostion = rnd.nextInt(pwd.length());
+				} while (result.charAt(charPostion) == '1');
+				
+				result.setCharAt(charPostion, '1');
+			}
+		} else {
+			for (int j = 0; j < 5; j++) {
+				int charPostion = 0;
+				do {
+					charPostion = rnd.nextInt(pwd.length());
+				} while (result.charAt(charPostion) == '1');
+				result.setCharAt(charPostion, '1');
+			}
+		}
+		return result.toString();
 	}
 
 }
